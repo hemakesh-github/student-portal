@@ -314,6 +314,11 @@ int main() {
                     updateStudentContact(students);
                 }
                 break;
+            case 10:
+                if (requireLoginForWrite()) {
+                    showDashboardSummary(students);
+                }
+                break;
             default:
                 cout << "Invalid option. Please try again." << endl;
         }
