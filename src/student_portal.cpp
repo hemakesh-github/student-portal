@@ -93,16 +93,15 @@ void addStudent(vector<Student>& students) {
         cin >> newStudent.age;
     }
 
-    cout << "Enter Program: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "Enter Program: ";
     getline(cin, newStudent.program);
 
     cout << "Enter Email: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.email);
 
     cout << "Enter Phone: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.phone);
 
     students.push_back(newStudent);
@@ -401,6 +400,9 @@ int main() {
                 if (requireLoginForWrite()) {
                     showSettings();
                 }
+                break;
+            case 12:
+                cout << "Notices are not available yet." << endl;
                 break;
             default:
                 cout << "Invalid option. Enter a number from the menu and try again." << endl;
