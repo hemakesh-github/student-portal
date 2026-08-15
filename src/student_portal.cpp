@@ -5,6 +5,19 @@
 
 
 using namespace std;
+bool isLoggedIn = false;
+string currentUser = "";
+
+struct Account {
+    string username;
+    int pin;
+};
+
+vector<Account> accounts = {
+    {"admin", 1234}
+};
+
+
 struct Student {
     int rollNo;
     string name;
@@ -19,9 +32,20 @@ void printMenu() {
     cout << "3. Search Student by Roll Number" << endl;
     cout << "4. Update Student Program" << endl;
     cout << "5. Delete Student" << endl;
+    cout << "6. Create Account" << endl;
+    cout << "7. Login" << endl;
+    cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
     cout << "Choose an option: ";
+}
 
+int findAccountIndexByUsername(const string& username) {
+    for (size_t i = 0; i < accounts.size(); ++i) {
+        if (accounts[i].username == username) {
+            return (int)i;
+        }
+    }
+    return -1;
 }
 
 int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
@@ -125,13 +149,83 @@ void deleteStudent(vector<Student>& students) {
     }
 }
 
+void createAccount() {
+    string username;
+    int pin;
+
+    cout << "Choose username: ";
+    cin >> username;
+
+    if (findAccountIndexByUsername(username) != -1) {
+        cout << "Username already exists. Choose a different username." << endl;
+        return;
+    }
+
+    cout << "Choose pin: ";
+    if (!(cin >> pin) || pin <= 0) {
+        cout << "Invalid pin. Please enter a positive number." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+
+    accounts.push_back({username, pin});
+    cout << "Account created successfully for user: " << username << endl;
+}
+
+bool loginUser() {
+    string username;
+    int pin;
+
+    if (isLoggedIn) {
+        cout << "Already logged in as " << currentUser << ". Please logout first." << endl;
+        return true;
+    }
+
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter pin: ";
+    cin >> pin;
+
+    int accountIndex = findAccountIndexByUsername(username);
+    if (accountIndex != -1 && accounts[accountIndex].pin == pin) {
+        currentUser = username;
+        isLoggedIn = true;
+        cout << "Login successful!" << endl;
+        return true;
+    }
+
+    cout << "Invalid credentials." << endl;
+    return false;
+}
+
+
+void logoutUser() {
+    if (!isLoggedIn) {
+        cout << "No active session found." << endl;
+        return;
+    }
+
+    cout << "User " << currentUser << " logged out successfully." << endl;
+    isLoggedIn = false;
+    currentUser.clear();
+}
+
+bool requireLoginForWrite() {
+    if (!isLoggedIn) {
+        cout << "Please login first to perform this action." << endl;
+        return false;
+    }
+    return true;
+}
+
 int main() {
     
     int choice;
     vector<Student> students;
     do {
         printMenu();
-        if (!cin >> choice) {
+        if (!(cin >> choice)) {
             cout << "Invalid input. Please enter a number." << endl;
             cin.clear(); 
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
@@ -140,19 +234,38 @@ int main() {
 
         switch (choice) {
             case 1:
-                addStudent(students);
+                if (requireLoginForWrite()) {
+                    addStudent(students);
+                }
                 break;
             case 2:
-                listStudents(students);
+                if (requireLoginForWrite()) {
+                    listStudents(students);
+                }
                 break;
             case 3:
-                searchStudent(students);
+                if (requireLoginForWrite()) {
+                    searchStudent(students);
+                }
                 break;
             case 4:
-                updateStudentProgram(students);
+                if (requireLoginForWrite()) {
+                    updateStudentProgram(students);
+                }
                 break;
             case 5:
-                deleteStudent(students);
+                if (requireLoginForWrite()) {
+                    deleteStudent(students);
+                } 
+                break;
+            case 6:
+                createAccount();
+                break;
+            case 7:
+                loginUser();
+                break;
+            case 8:
+                logoutUser();
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
