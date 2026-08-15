@@ -33,6 +33,34 @@ int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
     return -1; 
 }
 
+void addStudent(vector<Student>& students) {
+    Student newStudent;
+    cout << "Enter Roll Number: ";
+    cin >> newStudent.rollNo;
+    cout << "Enter Name: ";
+    getline(cin, newStudent.name);
+    cout << "Enter Age: ";
+    cin >> newStudent.age;
+    cout << "Enter Program: ";
+    getline(cin, newStudent.program);
+
+    students.push_back(newStudent);
+    cout << "Student added successfully!" << endl;
+}
+
+void listStudents(const vector<Student>& students) {
+    if (students.empty()) {
+        cout << "No students found." << endl;
+        return;
+    }
+
+    cout << "\n==== Student List ====" << endl;
+    for (const auto& student : students) {
+        cout << "Roll Number: " << student.rollNo << ", Name: " << student.name
+             << ", Age: " << student.age << ", Program: " << student.program << endl;
+    }
+}
+
 int main() {
    
     
