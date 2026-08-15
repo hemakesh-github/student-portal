@@ -23,9 +23,10 @@ void printMenu() {
     cout << "3. Search Student by Roll Number" << endl;
     cout << "4. Update Student Program" << endl;
     cout << "5. Delete Student" << endl;
+    cout << "6. Login" << endl;
+    cout << "7. Logout" << endl;
     cout << "0. Exit" << endl;
     cout << "Choose an option: ";
-
 }
 
 int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
