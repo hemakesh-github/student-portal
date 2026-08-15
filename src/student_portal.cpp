@@ -23,6 +23,8 @@ struct Student {
     string name;
     int age;
     string program;
+    string email;
+    string phone;
 };
 
 void printMenu() {
@@ -36,6 +38,7 @@ void printMenu() {
     cout << "7. Login" << endl;
     cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
+    cout << "9. Update Student Contact" << endl;
     cout << "Choose an option: ";
 }
 
@@ -86,6 +89,14 @@ void addStudent(vector<Student>& students) {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.program);
 
+    cout << "Enter Email: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, newStudent.email);
+
+    cout << "Enter Phone: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, newStudent.phone);
+
     students.push_back(newStudent);
     cout << "Student added successfully!" << endl;
     cout << "Total Students: " << students.size() << endl;
@@ -100,7 +111,8 @@ void listStudents(const vector<Student>& students) {
     cout << "\n==== Student List ====" << endl;
     for (const auto& student : students) {
         cout << "Roll Number: " << student.rollNo << ", Name: " << student.name
-             << ", Age: " << student.age << ", Program: " << student.program << endl;
+             << ", Age: " << student.age << ", Program: " << student.program
+             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
     }
 }
 
@@ -113,7 +125,8 @@ void searchStudent(const vector<Student>& students) {
     if (index != -1) {
         const Student& student = students[index];
         cout << "Student found: Roll Number: " << student.rollNo << ", Name: " << student.name
-             << ", Age: " << student.age << ", Program: " << student.program << endl;
+             << ", Age: " << student.age << ", Program: " << student.program
+             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
@@ -130,6 +143,26 @@ void updateStudentProgram(vector<Student>& students) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, students[index].program);
         cout << "Student program updated successfully!" << endl;
+    } else {
+        cout << "Student with Roll Number " << rollNo << " not found." << endl;
+    }
+}
+
+void updateStudentContact(vector<Student>& students) {
+    int rollNo;
+    cout << "Enter Roll Number to update contact: ";
+    cin >> rollNo;
+
+    int index = findStudentIndexByRollNo(students, rollNo);
+    if (index != -1) {
+        cout << "Enter new Email: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, students[index].email);
+
+        cout << "Enter new Phone: ";
+        getline(cin, students[index].phone);
+
+        cout << "Student contact updated successfully!" << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
@@ -269,6 +302,11 @@ int main() {
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
+                break;
+            case 9:
+                if (requireLoginForWrite()) {
+                    updateStudentContact(students);
+                }
                 break;
             default:
                 cout << "Invalid option. Please try again." << endl;
