@@ -20,3 +20,10 @@ Run:
 ```
 ./student-portal
 ```
+
+## Branch Workflow
+
+- Create feature branches from main
+- Commit small, meaningful changes
+- Merge to the main branch
+
