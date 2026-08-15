@@ -27,3 +27,13 @@ Run:
 - Commit small, meaningful changes
 - Merge to the main branch
 
+## Troubleshooting
+
+- If build fails, verify g++ version supports C++ 17
+- If merge fails, resolve conflict markers and recommit
+
+## Contribution Notes
+
+- Use descriptive commit messages
+- Avoid force pushes on shared branches
+
