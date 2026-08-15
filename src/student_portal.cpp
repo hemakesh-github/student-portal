@@ -177,7 +177,7 @@ int main() {
     vector<Student> students;
     do {
         printMenu();
-        if (!cin >> choice) {
+        if (!(cin >> choice)) {
             cout << "Invalid input. Please enter a number." << endl;
             cin.clear(); 
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
