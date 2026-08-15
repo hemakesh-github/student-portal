@@ -12,7 +12,7 @@ A c++ terminal based application for managing student records
 
 Build:
 ```
-g++ main.cpp -o student-portal
+g++ student_portal.cpp -o student-portal
 ```
 
 Run:
