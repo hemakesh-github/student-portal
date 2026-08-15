@@ -401,7 +401,7 @@ int main() {
                 }
                 break;
             default:
-                cout << "Invalid option. Please try again." << endl;
+                cout << "Invalid option. Enter a number from the menu and try again." << endl;
         }
     } while(choice != 0);
     
