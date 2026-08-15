@@ -5,6 +5,10 @@
 
 
 using namespace std;
+bool isLoggedIn = false;
+string currentUser = "";
+
+
 struct Student {
     int rollNo;
     string name;
