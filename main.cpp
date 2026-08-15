@@ -61,6 +61,21 @@ void listStudents(const vector<Student>& students) {
     }
 }
 
+void searchStudent(const vector<Student>& students) {
+    int rollNo;
+    cout << "Enter Roll Number to search: ";
+    cin >> rollNo;
+
+    int index = findStudentIndexByRollNo(students, rollNo);
+    if (index != -1) {
+        const Student& student = students[index];
+        cout << "Student found: Roll Number: " << student.rollNo << ", Name: " << student.name
+             << ", Age: " << student.age << ", Program: " << student.program << endl;
+    } else {
+        cout << "Student with Roll Number " << rollNo << " not found." << endl;
+    }
+}
+
 int main() {
    
     
