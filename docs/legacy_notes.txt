@@ -1,1 +1,0 @@
-Legacy migration notes for student portal.
