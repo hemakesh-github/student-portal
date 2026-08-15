@@ -106,7 +106,36 @@ void deleteStudent(vector<Student>& students) {
 }
 
 int main() {
-   
+    
+    int choice;
+    vector<Student> students;
+    do {
+        printMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addStudent(students);
+                break;
+            case 2:
+                listStudents(students);
+                break;
+            case 3:
+                searchStudent(students);
+                break;
+            case 4:
+                updateStudentProgram(students);
+                break;
+            case 5:
+                deleteStudent(students);
+                break;
+            case 0:
+                cout << "Exiting the program." << endl;
+                break;
+            default:
+                cout << "Invalid option. Please try again." << endl;
+        }
+    } while(choice != 0);
     
     return 0;
 }
