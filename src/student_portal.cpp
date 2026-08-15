@@ -172,6 +172,21 @@ void updateStudentContact(vector<Student>& students) {
 void showDashboardSummary(const vector<Student>& students) {
     cout << "\n==== Dashboard Summary ====" << endl;
     cout << "Total Students: " << students.size() << endl;
+
+    int uniquePrograms = 0;
+    for (size_t i = 0; i < students.size(); ++i) {
+        bool seen = false;
+        for (size_t j = 0; j < i; ++j) {
+            if (students[j].program == students[i].program) {
+                seen = true;
+                break;
+            }
+        }
+        if (!seen) {
+            uniquePrograms++;
+        }
+    }
+    cout << "Distinct Programs: " << uniquePrograms << endl;
 }
 
 void deleteStudent(vector<Student>& students) {
