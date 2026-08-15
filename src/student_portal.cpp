@@ -39,6 +39,7 @@ void printMenu() {
     cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
     cout << "9. Update Student Contact" << endl;
+    cout << "10. Dashboard Summary" << endl;
     cout << "Choose an option: ";
 }
 
@@ -166,6 +167,31 @@ void updateStudentContact(vector<Student>& students) {
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
+}
+
+void showDashboardSummary(const vector<Student>& students) {
+    cout << "\n==== Dashboard Summary ====" << endl;
+    if (isLoggedIn) {
+        cout << "Signed in as: " << currentUser << endl;
+    } else {
+        cout << "Signed in as: (none)" << endl;
+    }
+    cout << "Total Students: " << students.size() << endl;
+
+    int uniquePrograms = 0;
+    for (size_t i = 0; i < students.size(); ++i) {
+        bool seen = false;
+        for (size_t j = 0; j < i; ++j) {
+            if (students[j].program == students[i].program) {
+                seen = true;
+                break;
+            }
+        }
+        if (!seen) {
+            uniquePrograms++;
+        }
+    }
+    cout << "Distinct Programs: " << uniquePrograms << endl;
 }
 
 void deleteStudent(vector<Student>& students) {
@@ -306,6 +332,11 @@ int main() {
             case 9:
                 if (requireLoginForWrite()) {
                     updateStudentContact(students);
+                }
+                break;
+            case 10:
+                if (requireLoginForWrite()) {
+                    showDashboardSummary(students);
                 }
                 break;
             default:
