@@ -168,6 +168,11 @@ void updateStudentContact(vector<Student>& students) {
     }
 }
 
+void showDashboardSummary(const vector<Student>& students) {
+    cout << "\n==== Dashboard Summary ====" << endl;
+    cout << "Total Students: " << students.size() << endl;
+}
+
 void deleteStudent(vector<Student>& students) {
     int rollNo;
     cout << "Enter Roll Number to delete: ";
