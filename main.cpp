@@ -76,6 +76,35 @@ void searchStudent(const vector<Student>& students) {
     }
 }
 
+void updateStudentProgram(vector<Student>& students) {
+    int rollNo;
+    cout << "Enter Roll Number to update program: ";
+    cin >> rollNo;
+
+    int index = findStudentIndexByRollNo(students, rollNo);
+    if (index != -1) {
+        cout << "Enter new Program: ";
+        getline(cin, students[index].program);
+        cout << "Student program updated successfully!" << endl;
+    } else {
+        cout << "Student with Roll Number " << rollNo << " not found." << endl;
+    }
+}
+
+void deleteStudent(vector<Student>& students) {
+    int rollNo;
+    cout << "Enter Roll Number to delete: ";
+    cin >> rollNo;
+
+    int index = findStudentIndexByRollNo(students, rollNo);
+    if (index != -1) {
+        students.erase(students.begin() + index);
+        cout << "Student deleted successfully!" << endl;
+    } else {
+        cout << "Student with Roll Number " << rollNo << " not found." << endl;
+    }
+}
+
 int main() {
    
     
