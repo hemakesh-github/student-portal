@@ -171,6 +171,11 @@ void updateStudentContact(vector<Student>& students) {
 
 void showDashboardSummary(const vector<Student>& students) {
     cout << "\n==== Dashboard Summary ====" << endl;
+    if (isLoggedIn) {
+        cout << "Signed in as: " << currentUser << endl;
+    } else {
+        cout << "Signed in as: (none)" << endl;
+    }
     cout << "Total Students: " << students.size() << endl;
 
     int uniquePrograms = 0;
