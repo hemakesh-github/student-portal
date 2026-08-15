@@ -36,16 +36,35 @@ int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
 void addStudent(vector<Student>& students) {
     Student newStudent;
     cout << "Enter Roll Number: ";
+
     cin >> newStudent.rollNo;
+    while(newStudent.rollNo <= 0) {
+        cout << "Invalid roll number. Please enter a positive integer: ";
+        cin >> newStudent.rollNo;
+    }
+
+    if (findStudentIndexByRollNo(students, newStudent.rollNo) != -1) {
+        cout << "Student with this roll number already exists." << endl;
+        return;
+    }
     cout << "Enter Name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.name);
+
     cout << "Enter Age: ";
     cin >> newStudent.age;
+    while(newStudent.age <= 0) {
+        cout << "Invalid age. Please enter a positive integer: ";
+        cin >> newStudent.age;
+    }
+
     cout << "Enter Program: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.program);
 
     students.push_back(newStudent);
     cout << "Student added successfully!" << endl;
+    cout << "Total Students: " << students.size() << endl;
 }
 
 void listStudents(const vector<Student>& students) {
@@ -84,6 +103,7 @@ void updateStudentProgram(vector<Student>& students) {
     int index = findStudentIndexByRollNo(students, rollNo);
     if (index != -1) {
         cout << "Enter new Program: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, students[index].program);
         cout << "Student program updated successfully!" << endl;
     } else {
@@ -111,7 +131,12 @@ int main() {
     vector<Student> students;
     do {
         printMenu();
-        cin >> choice;
+        if (!cin >> choice) {
+            cout << "Invalid input. Please enter a number." << endl;
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            continue; 
+        }
 
         switch (choice) {
             case 1:
