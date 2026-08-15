@@ -186,19 +186,35 @@ int main() {
 
         switch (choice) {
             case 1:
-                addStudent(students);
+                if (requireLoginForWrite()) {
+                    addStudent(students);
+                }
                 break;
             case 2:
-                listStudents(students);
+                if (requireLoginForWrite()) {
+                    listStudents(students);
+                }
                 break;
             case 3:
-                searchStudent(students);
+                if (requireLoginForWrite()) {
+                    searchStudent(students);
+                }
                 break;
             case 4:
-                updateStudentProgram(students);
+                if (requireLoginForWrite()) {
+                    updateStudentProgram(students);
+                }
                 break;
             case 5:
-                deleteStudent(students);
+                if (requireLoginForWrite()) {
+                    deleteStudent(students);
+                } 
+                break;
+            case 6:
+                loginUser();
+                break;
+            case 7:
+                logoutUser();
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
