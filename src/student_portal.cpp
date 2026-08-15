@@ -17,6 +17,8 @@ vector<Account> accounts = {
     {"admin", 1234}
 };
 
+// Privacy: only the admin account may view student mobile numbers.
+
 struct Student {
     int rollNo;
     string name;
