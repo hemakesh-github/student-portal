@@ -23,6 +23,8 @@ struct Student {
     string name;
     int age;
     string program;
+    string email;
+    string phone;
 };
 
 void printMenu() {
@@ -86,6 +88,14 @@ void addStudent(vector<Student>& students) {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, newStudent.program);
 
+    cout << "Enter Email: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, newStudent.email);
+
+    cout << "Enter Phone: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, newStudent.phone);
+
     students.push_back(newStudent);
     cout << "Student added successfully!" << endl;
     cout << "Total Students: " << students.size() << endl;
@@ -100,7 +110,8 @@ void listStudents(const vector<Student>& students) {
     cout << "\n==== Student List ====" << endl;
     for (const auto& student : students) {
         cout << "Roll Number: " << student.rollNo << ", Name: " << student.name
-             << ", Age: " << student.age << ", Program: " << student.program << endl;
+             << ", Age: " << student.age << ", Program: " << student.program
+             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
     }
 }
 
@@ -113,7 +124,8 @@ void searchStudent(const vector<Student>& students) {
     if (index != -1) {
         const Student& student = students[index];
         cout << "Student found: Roll Number: " << student.rollNo << ", Name: " << student.name
-             << ", Age: " << student.age << ", Program: " << student.program << endl;
+             << ", Age: " << student.age << ", Program: " << student.program
+             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
