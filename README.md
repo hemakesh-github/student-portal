@@ -8,4 +8,15 @@ A c++ terminal based application for managing student records
 2. Navigate to project directory
 3. Compile the source code (main.cpp)
 
+## Build and Run
 
+Build:
+```
+g++ main.cpp -o student-portal
+```
+
+Run:
+
+```
+./student-portal
+```
