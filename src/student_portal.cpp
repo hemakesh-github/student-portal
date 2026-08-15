@@ -130,6 +130,47 @@ void deleteStudent(vector<Student>& students) {
     }
 }
 
+bool loginUser() {
+string username;
+int pin;
+
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter pin: ";
+    cin >> pin;
+
+    // Simple login logic - replace with actual authentication mechanism
+    if (username == "admin" && pin == 1234) {
+        currentUser = username;
+        isLoggedIn = true;
+        cout << "Login successful!" << endl;
+        return true;
+    } else {
+        cout << "Invalid credentials." << endl;
+        return false;
+    }
+}
+
+
+void logoutUser() {
+    if (!isLoggedIn) {
+        cout << "No active session found." << endl;
+        return;
+    }
+
+    cout << "User " << currentUser << " logged out successfully." << endl;
+    isLoggedIn = false;
+    currentUser.clear();
+}
+
+bool requireLoginForWrite() {
+    if (!isLoggedIn) {
+        cout << "Please login first to perform this action." << endl;
+        return false;
+    }
+    return true;
+}
+
 int main() {
     
     int choice;
