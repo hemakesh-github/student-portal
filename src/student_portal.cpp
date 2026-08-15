@@ -39,6 +39,7 @@ void printMenu() {
     cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
     cout << "9. Update Student Contact" << endl;
+    cout << "10. Dashboard Summary" << endl;
     cout << "Choose an option: ";
 }
 
