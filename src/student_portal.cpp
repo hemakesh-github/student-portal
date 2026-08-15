@@ -17,7 +17,6 @@ vector<Account> accounts = {
     {"admin", 1234}
 };
 
-
 struct Student {
     int rollNo;
     string name;
@@ -59,6 +58,10 @@ int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
         }
     }
     return -1; 
+}
+
+bool canViewMobileNumber() {
+    return isLoggedIn && currentUser == "admin";
 }
 
 void addStudent(vector<Student>& students) {
@@ -113,7 +116,11 @@ void listStudents(const vector<Student>& students) {
     for (const auto& student : students) {
         cout << "Roll Number: " << student.rollNo << ", Name: " << student.name
              << ", Age: " << student.age << ", Program: " << student.program
-             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
+             << ", Email: " << student.email;
+        if (canViewMobileNumber()) {
+            cout << ", Phone: " << student.phone;
+        }
+        cout << endl;
     }
 }
 
@@ -127,7 +134,11 @@ void searchStudent(const vector<Student>& students) {
         const Student& student = students[index];
         cout << "Student found: Roll Number: " << student.rollNo << ", Name: " << student.name
              << ", Age: " << student.age << ", Program: " << student.program
-             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
+             << ", Email: " << student.email;
+        if (canViewMobileNumber()) {
+            cout << ", Phone: " << student.phone;
+        }
+        cout << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
