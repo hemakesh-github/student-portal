@@ -40,6 +40,7 @@ void printMenu() {
     cout << "9. Update Student Contact" << endl;
     cout << "10. Dashboard Summary" << endl;
     cout << "11. Settings" << endl;
+    cout << "12. Notices (draft)" << endl;
     cout << "Choose an option: ";
 }
 
