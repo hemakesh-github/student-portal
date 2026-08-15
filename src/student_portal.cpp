@@ -39,6 +39,7 @@ void printMenu() {
     cout << "0. Exit" << endl;
     cout << "9. Update Student Contact" << endl;
     cout << "10. Dashboard Summary" << endl;
+    cout << "11. Settings" << endl;
     cout << "Choose an option: ";
 }
 
@@ -289,6 +290,49 @@ bool requireLoginForWrite() {
     return true;
 }
 
+void changeCurrentUserPin() {
+    int newPin;
+    cout << "Enter new pin: ";
+    if (!(cin >> newPin) || newPin <= 0) {
+        cout << "Invalid pin." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+
+    int index = findAccountIndexByUsername(currentUser);
+    if (index == -1) {
+        cout << "Account not found." << endl;
+        return;
+    }
+
+    accounts[index].pin = newPin;
+    cout << "Pin updated for user: " << currentUser << endl;
+}
+
+void showSettings() {
+    cout << "\n==== Settings ====" << endl;
+    cout << "Signed in as: " << currentUser << endl;
+    if (canViewMobileNumber()) {
+        cout << "Mobile numbers: visible (admin)" << endl;
+    } else {
+        cout << "Mobile numbers: hidden" << endl;
+    }
+    cout << "Policy: only the admin account can view student mobile numbers." << endl;
+
+    cout << "Change pin? (1 = yes, 0 = no): ";
+    int changePin;
+    if (!(cin >> changePin)) {
+        cout << "Invalid input." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+    if (changePin == 1) {
+        changeCurrentUserPin();
+    }
+}
+
 int main() {
     
     int choice;
@@ -348,6 +392,11 @@ int main() {
             case 10:
                 if (requireLoginForWrite()) {
                     showDashboardSummary(students);
+                }
+                break;
+            case 11:
+                if (requireLoginForWrite()) {
+                    showSettings();
                 }
                 break;
             default:
