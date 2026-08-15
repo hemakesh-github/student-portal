@@ -8,6 +8,15 @@ using namespace std;
 bool isLoggedIn = false;
 string currentUser = "";
 
+struct Account {
+    string username;
+    int pin;
+};
+
+vector<Account> accounts = {
+    {"admin", 1234}
+};
+
 
 struct Student {
     int rollNo;
@@ -23,10 +32,20 @@ void printMenu() {
     cout << "3. Search Student by Roll Number" << endl;
     cout << "4. Update Student Program" << endl;
     cout << "5. Delete Student" << endl;
-    cout << "6. Login" << endl;
-    cout << "7. Logout" << endl;
+    cout << "6. Create Account" << endl;
+    cout << "7. Login" << endl;
+    cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
     cout << "Choose an option: ";
+}
+
+int findAccountIndexByUsername(const string& username) {
+    for (size_t i = 0; i < accounts.size(); ++i) {
+        if (accounts[i].username == username) {
+            return (int)i;
+        }
+    }
+    return -1;
 }
 
 int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
@@ -130,25 +149,54 @@ void deleteStudent(vector<Student>& students) {
     }
 }
 
+void createAccount() {
+    string username;
+    int pin;
+
+    cout << "Choose username: ";
+    cin >> username;
+
+    if (findAccountIndexByUsername(username) != -1) {
+        cout << "Username already exists. Choose a different username." << endl;
+        return;
+    }
+
+    cout << "Choose pin: ";
+    if (!(cin >> pin) || pin <= 0) {
+        cout << "Invalid pin. Please enter a positive number." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+
+    accounts.push_back({username, pin});
+    cout << "Account created successfully for user: " << username << endl;
+}
+
 bool loginUser() {
-string username;
-int pin;
+    string username;
+    int pin;
+
+    if (isLoggedIn) {
+        cout << "Already logged in as " << currentUser << ". Please logout first." << endl;
+        return true;
+    }
 
     cout << "Enter username: ";
     cin >> username;
     cout << "Enter pin: ";
     cin >> pin;
 
-    // Simple login logic - replace with actual authentication mechanism
-    if (username == "admin" && pin == 1234) {
+    int accountIndex = findAccountIndexByUsername(username);
+    if (accountIndex != -1 && accounts[accountIndex].pin == pin) {
         currentUser = username;
         isLoggedIn = true;
         cout << "Login successful!" << endl;
         return true;
-    } else {
-        cout << "Invalid credentials." << endl;
-        return false;
     }
+
+    cout << "Invalid credentials." << endl;
+    return false;
 }
 
 
@@ -211,9 +259,12 @@ int main() {
                 } 
                 break;
             case 6:
-                loginUser();
+                createAccount();
                 break;
             case 7:
+                loginUser();
+                break;
+            case 8:
                 logoutUser();
                 break;
             case 0:
