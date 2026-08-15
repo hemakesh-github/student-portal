@@ -17,7 +17,6 @@ vector<Account> accounts = {
     {"admin", 1234}
 };
 
-
 struct Student {
     int rollNo;
     string name;
@@ -40,6 +39,7 @@ void printMenu() {
     cout << "0. Exit" << endl;
     cout << "9. Update Student Contact" << endl;
     cout << "10. Dashboard Summary" << endl;
+    cout << "11. Settings" << endl;
     cout << "Choose an option: ";
 }
 
@@ -59,6 +59,10 @@ int findStudentIndexByRollNo(const vector<Student>& students, int rollNo) {
         }
     }
     return -1; 
+}
+
+bool canViewMobileNumber() {
+    return isLoggedIn && currentUser == "admin";
 }
 
 void addStudent(vector<Student>& students) {
@@ -113,7 +117,11 @@ void listStudents(const vector<Student>& students) {
     for (const auto& student : students) {
         cout << "Roll Number: " << student.rollNo << ", Name: " << student.name
              << ", Age: " << student.age << ", Program: " << student.program
-             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
+             << ", Email: " << student.email;
+        if (canViewMobileNumber()) {
+            cout << ", Phone: " << student.phone;
+        }
+        cout << endl;
     }
 }
 
@@ -127,7 +135,11 @@ void searchStudent(const vector<Student>& students) {
         const Student& student = students[index];
         cout << "Student found: Roll Number: " << student.rollNo << ", Name: " << student.name
              << ", Age: " << student.age << ", Program: " << student.program
-             << ", Email: " << student.email << ", Phone: " << student.phone << endl;
+             << ", Email: " << student.email;
+        if (canViewMobileNumber()) {
+            cout << ", Phone: " << student.phone;
+        }
+        cout << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
@@ -278,6 +290,49 @@ bool requireLoginForWrite() {
     return true;
 }
 
+void changeCurrentUserPin() {
+    int newPin;
+    cout << "Enter new pin: ";
+    if (!(cin >> newPin) || newPin <= 0) {
+        cout << "Invalid pin." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+
+    int index = findAccountIndexByUsername(currentUser);
+    if (index == -1) {
+        cout << "Account not found." << endl;
+        return;
+    }
+
+    accounts[index].pin = newPin;
+    cout << "Pin updated for user: " << currentUser << endl;
+}
+
+void showSettings() {
+    cout << "\n==== Settings ====" << endl;
+    cout << "Signed in as: " << currentUser << endl;
+    if (canViewMobileNumber()) {
+        cout << "Mobile numbers: visible (admin)" << endl;
+    } else {
+        cout << "Mobile numbers: hidden" << endl;
+    }
+    cout << "Policy: only the admin account can view student mobile numbers." << endl;
+
+    cout << "Change pin? (1 = yes, 0 = no): ";
+    int changePin;
+    if (!(cin >> changePin)) {
+        cout << "Invalid input." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+    if (changePin == 1) {
+        changeCurrentUserPin();
+    }
+}
+
 int main() {
     
     int choice;
@@ -337,6 +392,11 @@ int main() {
             case 10:
                 if (requireLoginForWrite()) {
                     showDashboardSummary(students);
+                }
+                break;
+            case 11:
+                if (requireLoginForWrite()) {
+                    showSettings();
                 }
                 break;
             default:
