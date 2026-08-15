@@ -38,6 +38,7 @@ void printMenu() {
     cout << "7. Login" << endl;
     cout << "8. Logout" << endl;
     cout << "0. Exit" << endl;
+    cout << "9. Update Student Contact" << endl;
     cout << "Choose an option: ";
 }
 
@@ -142,6 +143,26 @@ void updateStudentProgram(vector<Student>& students) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, students[index].program);
         cout << "Student program updated successfully!" << endl;
+    } else {
+        cout << "Student with Roll Number " << rollNo << " not found." << endl;
+    }
+}
+
+void updateStudentContact(vector<Student>& students) {
+    int rollNo;
+    cout << "Enter Roll Number to update contact: ";
+    cin >> rollNo;
+
+    int index = findStudentIndexByRollNo(students, rollNo);
+    if (index != -1) {
+        cout << "Enter new Email: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, students[index].email);
+
+        cout << "Enter new Phone: ";
+        getline(cin, students[index].phone);
+
+        cout << "Student contact updated successfully!" << endl;
     } else {
         cout << "Student with Roll Number " << rollNo << " not found." << endl;
     }
@@ -281,6 +302,11 @@ int main() {
                 break;
             case 0:
                 cout << "Exiting the program." << endl;
+                break;
+            case 9:
+                if (requireLoginForWrite()) {
+                    updateStudentContact(students);
+                }
                 break;
             default:
                 cout << "Invalid option. Please try again." << endl;
